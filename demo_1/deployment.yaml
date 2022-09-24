@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-backend-v1
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dummy-backend-v1
+  template:
+    metadata:
+      labels:
+        app: dummy-backend-v1
+    spec:
+      containers:
+      - name: dummy-backend-v1
+        image: alsaheem/dummy-backend:v1
+        env:
+          - name:  DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  username
+          - name:  DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  password
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-backend-v2
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dummy-backend-v2
+  template:
+    metadata:
+      labels:
+        app: dummy-backend-v2
+    spec:
+      containers:
+      - name: dummy-backend-v2
+        image: alsaheem/dummy-backend:v2
+        env:
+          - name:  DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  username
+          - name:  DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  password
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-frontend
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dummy-frontend
+  template:
+    metadata:
+      labels:
+        app: dummy-frontend
+    spec:
+      containers:
+      - name: dummy-frontend
+        image: alsaheem/dummy-frontend
+        env:
+          - name:  REACT_APP_BACKEND_HOST
+            value: "backend-service-v1.default.svc.cluster.local"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

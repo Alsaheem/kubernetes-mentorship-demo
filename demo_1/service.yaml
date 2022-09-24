@@ -1,0 +1,49 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  backend-service-v1
+  namespace: dev
+spec:
+  selector:
+    app:  dummy-backend-v1
+  type:  ClusterIP
+  ports:
+  - name:  http
+    protocol: TCP
+    port:  80
+    targetPort:  5000
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  backend-service-v2
+  namespace: dev
+spec:
+  selector:
+    app:  dummy-backend-v2
+  type:  ClusterIP
+  ports:
+  - name:  http
+    protocol: TCP
+    port:  80
+    targetPort:  5000
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  frontend-service
+  namespace: dev
+spec:
+  selector:
+    app:  dummy-frontend
+  type:  NodePort
+  ports:
+  - name:  http
+    protocol: TCP
+    port:  80
+    targetPort:  80
+    nodePort: 31576
