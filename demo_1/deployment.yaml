@@ -89,11 +89,9 @@ spec:
       - name: dummy-frontend
         image: alsaheem/dummy-frontend
         env:
+          - name: GET_HOSTS_FROM
+            value: dns
           - name:  REACT_APP_BACKEND_HOST
-            value: "backend-service-v1.default.svc.cluster.local"
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+            value: /backend/v2
         ports:
-        - containerPort: 80
+        - containerPort: 3000
