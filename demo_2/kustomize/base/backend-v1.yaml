@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-backend-v1
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: dummy-backend-v1
+  template:
+    metadata:
+      labels:
+        app: dummy-backend-v1
+    spec:
+      containers:
+      - name: dummy-backend-v1
+        image: alsaheem/dummy-backend:v1
+        env:
+          - name:  DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  username
+          - name:  DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name:  db-creds
+                key:  password
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  backend-service-v1
+  namespace: dev
+spec:
+  selector:
+    app:  dummy-backend-v1
+  type:  ClusterIP
+  ports:
+  - name:  http
+    protocol: TCP
+    port:  80
+    targetPort:  5000
+---
+
+

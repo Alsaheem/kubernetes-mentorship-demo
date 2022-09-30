@@ -8,6 +8,13 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name:  development
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
   name:  staging
 
 ---
@@ -15,4 +22,4 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name:  prod
+  name:  production

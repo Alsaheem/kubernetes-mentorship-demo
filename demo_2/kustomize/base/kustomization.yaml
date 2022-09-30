@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+kind: Kustomization
+
+resources:
+  - backend-v1.yaml
+  - backend-v2.yaml
+  - frontend.yaml
+  - namespace.yaml
+
