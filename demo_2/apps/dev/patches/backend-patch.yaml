@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-backend-v1
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dummy-backend-v1
+    
+  template:
+    metadata:
+      labels:
+        app: dummy-backend-v1
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-backend-v2
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dummy-backend-v2
+    
+  template:
+    metadata:
+      labels:
+        app: dummy-backend-v2

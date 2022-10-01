@@ -16,6 +16,8 @@ spec:
       - name: dummy-backend-v1
         image: alsaheem/dummy-backend:v1
         env:
+          - name: MY_URL
+            value: http://www.facebook.com
           - name:  DB_USERNAME
             valueFrom:
               secretKeyRef:
@@ -92,6 +94,63 @@ spec:
           - name: GET_HOSTS_FROM
             value: dns
           - name:  REACT_APP_BACKEND_HOST
-            value: /backend/v2
+            value: /backend/v1
         ports:
         - containerPort: 3000
+
+
+
+
+
+
+---
+# apiVersion: extensions/v1beta1
+# kind: Deployment
+# metadata:
+#   name:  my-name
+#   labels:
+#     name:  my-name
+# spec:
+#   strategy:
+#     rollingUpdate:
+#       maxSurge: 1
+#       maxUnavailable: 1
+#     type: RollingUpdate
+#   template:
+#     metadata:
+#       labels:
+#         name:  my-name
+#     spec:
+#       containers:
+#       - image:  ipedrazas/docmock
+#         name:  my-name
+#         resources:
+#           requests:
+#             cpu: "20m"
+#             memory: "55M"
+#         livenessProbe:
+#           httpGet:
+#             path: /_status/healthz
+#             port: 5000
+#           initialDelaySeconds: 90
+#           timeoutSeconds: 10
+#         readinessProbe:
+#           httpGet:
+#             path: /_status/healthz
+#             port: 5000
+#           initialDelaySeconds: 30
+#           timeoutSeconds: 10
+#         env:
+#         - name:  ENVVARNAME
+#           value:  ENVVARVALUE       
+#         ports:
+#         - containerPort:  5000
+#           name:  my-name
+#         volumeMounts:
+#         - mountPath: /data
+#           name: data
+#       volumes:
+#         - name: data
+#           emptyDir: {}
+#       restartPolicy: Always
+#       imagePullPolicy: Always

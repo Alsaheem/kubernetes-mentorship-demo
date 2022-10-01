@@ -9,11 +9,11 @@ bases:
   - ../../kustomize/base
 
 patches:
-  - backend-patch.yaml
-  - frontend-patch.yaml
+  - patches/backend-patch.yaml
+  - patches/frontend-patch.yaml
 
 resources:
-  - secrets.yaml
+  - secrets-depl.yaml
 
 commonLabels:
   project: devops
